@@ -1,6 +1,6 @@
 import React from 'react';
 import { clsx } from 'clsx';
-import { CustomerStatus, CustomerType, ChallanStatus, MovementType, Role } from '../../types';
+import { CustomerStatus, ChallanStatus, MovementType, Role } from '../../types';
 
 interface BadgeProps {
   children?: React.ReactNode;

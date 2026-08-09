@@ -7,12 +7,8 @@ import {
   Building,
   MapPin,
   Calendar,
-  PlusCircle,
   FileSpreadsheet,
   Clock,
-  CheckCircle,
-  CreditCard,
-  User,
 } from 'lucide-react';
 import { CustomerService } from '../services/customer.service';
 import { ChallanService } from '../services/challan.service';
@@ -53,7 +49,7 @@ export const CustomerDetailPage: React.FC = () => {
         ChallanService.getAll({ customerId: id, limit: 10 }).catch(() => ({ data: [] })),
       ]);
       setCustomer(custData);
-      setFollowUps(followUpData?.data || (Array.isArray(followUpData) ? followUpData : []));
+      setFollowUps(Array.isArray(followUpData) ? followUpData : ((followUpData as any)?.data || []));
       setChallans(challanData?.data || (Array.isArray(challanData) ? challanData : []));
     } catch (err: any) {
       error(err.message || 'Failed to fetch customer profile');

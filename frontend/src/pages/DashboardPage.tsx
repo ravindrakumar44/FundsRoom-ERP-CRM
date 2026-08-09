@@ -5,14 +5,9 @@ import {
   Package,
   FileSpreadsheet,
   AlertTriangle,
-  ArrowUpRight,
-  TrendingUp,
   Calendar,
-  Layers,
-  ArrowDownUp,
   Clock,
   CheckCircle2,
-  Phone,
   Building,
 } from 'lucide-react';
 import {
@@ -26,15 +21,12 @@ import {
   PieChart,
   Pie,
   Cell,
-  BarChart,
-  Bar,
-  Legend,
 } from 'recharts';
 import { DashboardService } from '../services/dashboard.service';
 import { DashboardStats } from '../types';
 import { StatCard } from '../components/common/StatCard';
 import { Card, CardHeader, CardBody } from '../components/common/Card';
-import { StatusBadge, Badge } from '../components/common/Badge';
+import { StatusBadge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
 
 export const DashboardPage: React.FC = () => {

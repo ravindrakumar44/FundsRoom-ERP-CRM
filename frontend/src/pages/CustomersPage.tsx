@@ -7,7 +7,6 @@ import {
   Users,
   UserPlus,
   Search,
-  Filter,
   Phone,
   Mail,
   Building,
@@ -15,11 +14,10 @@ import {
   Edit2,
   Trash2,
   Eye,
-  FileSpreadsheet,
   X,
 } from 'lucide-react';
 import { CustomerService } from '../services/customer.service';
-import { Customer, CustomerType, CustomerStatus } from '../types';
+import { Customer } from '../types';
 import { Card } from '../components/common/Card';
 import { StatusBadge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
@@ -53,7 +51,7 @@ const customerFormSchema = z.object({
 type CustomerFormInputs = z.infer<typeof customerFormSchema>;
 
 export const CustomersPage: React.FC = () => {
-  const { user, hasRole } = useAuth();
+  const { hasRole } = useAuth();
   const { success, error } = useToast();
   const navigate = useNavigate();
 

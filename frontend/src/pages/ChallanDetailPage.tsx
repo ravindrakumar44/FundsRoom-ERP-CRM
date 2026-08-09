@@ -6,18 +6,9 @@ import {
   Download,
   CheckCircle2,
   XCircle,
-  FileSpreadsheet,
-  Building,
-  Phone,
-  Mail,
-  MapPin,
-  Calendar,
-  AlertTriangle,
 } from 'lucide-react';
 import { ChallanService } from '../services/challan.service';
 import { Challan } from '../types';
-import { Card, CardHeader, CardBody } from '../components/common/Card';
-import { StatusBadge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
 import { ConfirmDialog } from '../components/common/ConfirmDialog';
 import { ChallanPrintView } from '../components/challan/ChallanPrintView';

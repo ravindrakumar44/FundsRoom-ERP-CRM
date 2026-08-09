@@ -3,13 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import {
   Menu,
   Bell,
-  Search,
-  Plus,
   AlertCircle,
   FilePlus2,
-  UserPlus,
-  ArrowDownUp,
-  Layers,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { ProductService } from '../../services/product.service';
@@ -17,11 +12,11 @@ import { Product } from '../../types';
 import { Button } from '../common/Button';
 
 interface HeaderProps {
-  collapsed: boolean;
+  collapsed?: boolean;
   onToggleCollapse: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ collapsed, onToggleCollapse }) => {
+export const Header: React.FC<HeaderProps> = ({ onToggleCollapse }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [lowStockAlerts, setLowStockAlerts] = useState<Product[]>([]);

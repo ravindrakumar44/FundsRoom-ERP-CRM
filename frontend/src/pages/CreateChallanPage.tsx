@@ -5,11 +5,7 @@ import {
   Plus,
   Trash2,
   AlertTriangle,
-  FileSpreadsheet,
   CheckCircle2,
-  Layers,
-  Building,
-  MapPin,
 } from 'lucide-react';
 import { CustomerService } from '../services/customer.service';
 import { ProductService } from '../services/product.service';

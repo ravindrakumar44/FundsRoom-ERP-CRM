@@ -1,4 +1,4 @@
-import { Customer, Product, Challan, StockMovement, User, DashboardStats } from '../types';
+import { Customer, Product, Challan, StockMovement, User } from '../types';
 
 export const mockUsers: Record<string, User> = {
   'admin@nexora.demo': {

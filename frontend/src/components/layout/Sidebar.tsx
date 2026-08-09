@@ -7,11 +7,9 @@ import {
   ArrowLeftRight,
   FileSpreadsheet,
   PlusCircle,
-  Shield,
   Layers,
   Sparkles,
   LogOut,
-  ChevronRight,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { StatusBadge } from '../common/Badge';

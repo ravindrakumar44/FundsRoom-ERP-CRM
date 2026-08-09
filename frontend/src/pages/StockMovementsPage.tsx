@@ -4,17 +4,12 @@ import {
   ArrowUpRight,
   ArrowDownLeft,
   PlusCircle,
-  Package,
-  Search,
-  Calendar,
-  Layers,
-  User,
 } from 'lucide-react';
 import { StockService } from '../services/stock.service';
 import { ProductService } from '../services/product.service';
 import { StockMovement, Product, MovementType } from '../types';
 import { Card } from '../components/common/Card';
-import { StatusBadge, Badge } from '../components/common/Badge';
+import { StatusBadge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
 import { Modal } from '../components/common/Modal';
 import { Pagination } from '../components/common/Pagination';
