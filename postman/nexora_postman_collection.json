@@ -1,0 +1,455 @@
+{
+  "info": {
+    "_postman_id": "nexora-erp-crm-api-collection-2026",
+    "name": "NEXORA Operations & Customer Management API",
+    "description": "Comprehensive Postman collection for NEXORA Mini ERP + CRM Portal. Covers Authentication, Customer CRM, Follow-ups, Product Catalog, Stock Movements, and Atomic Delivery Challan Transactions.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "1. Login (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data && jsonData.data.token) {",
+                  "    pm.environment.set('token', jsonData.data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@nexora.demo\",\n  \"password\": \"Admin@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "2. Get Current Profile (/me)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Get Executive Dashboard Telemetry",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/dashboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "dashboard"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "1. List Customers (Paginated & Filtered)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers?page=1&limit=10&status=ACTIVE&type=WHOLESALE",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "status", "value": "ACTIVE" },
+                { "key": "type", "value": "WHOLESALE" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "2. Get Customer by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/{{customerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers", "{{customerId}}"]
+            }
+          }
+        },
+        {
+          "name": "3. Create Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Vikas Patil\",\n  \"businessName\": \"Patil Industrial Supplies Ltd\",\n  \"mobile\": \"+91 98200 44556\",\n  \"email\": \"vikas@patilind.com\",\n  \"gstNumber\": \"27AABCP1234F1Z9\",\n  \"customerType\": \"DISTRIBUTOR\",\n  \"address\": \"Plot 88, Rabale MIDC, Navi Mumbai, Maharashtra 400701\",\n  \"status\": \"ACTIVE\",\n  \"notes\": \"Key account for heavy machinery parts.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/customers",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers"]
+            }
+          }
+        },
+        {
+          "name": "4. Update Customer",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"notes\": \"Updated contact terms: Credit limit 30 days.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/{{customerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers", "{{customerId}}"]
+            }
+          }
+        },
+        {
+          "name": "5. Delete Customer (Admin only)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/{{customerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers", "{{customerId}}"]
+            }
+          }
+        },
+        {
+          "name": "6. Get Customer Follow-ups",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/{{customerId}}/follow-ups",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers", "{{customerId}}", "follow-ups"]
+            }
+          }
+        },
+        {
+          "name": "7. Create Customer Follow-up",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"note\": \"Discussed bulk order for 2-inch ball valves.\",\n  \"followUpDate\": \"2026-08-15T10:00:00.000Z\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/{{customerId}}/follow-ups",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers", "{{customerId}}", "follow-ups"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products & Inventory",
+      "item": [
+        {
+          "name": "1. List Products (with Search & Category)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?page=1&limit=10&search=Motor",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "search", "value": "Motor" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "2. Get Low Stock Products",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/low-stock",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", "low-stock"]
+            }
+          }
+        },
+        {
+          "name": "3. Get Product by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/{{productId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", "{{productId}}"]
+            }
+          }
+        },
+        {
+          "name": "4. Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productName\": \"3-Phase Induction Motor 10HP\",\n  \"sku\": \"MOT-IND-10HP-01\",\n  \"category\": \"Motors & Actuators\",\n  \"unitPrice\": 32500,\n  \"currentStock\": 15,\n  \"minimumStock\": 5,\n  \"warehouseLocation\": \"Bay A, Rack 05\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products"]
+            }
+          }
+        },
+        {
+          "name": "5. Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"unitPrice\": 33000,\n  \"minimumStock\": 6\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/products/{{productId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", "{{productId}}"]
+            }
+          }
+        },
+        {
+          "name": "6. Delete Product (Admin only)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/{{productId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", "{{productId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stock Movements",
+      "item": [
+        {
+          "name": "1. List Stock Movements Audit Trail",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/stock-movements?page=1&limit=20&type=IN",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stock-movements"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "20" },
+                { "key": "type", "value": "IN" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "2. Record Manual Stock Movement (Adjustment)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{productId}}\",\n  \"quantity\": 10,\n  \"movementType\": \"IN\",\n  \"reason\": \"Warehouse inventory batch replenishment PO-8891\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/stock-movements",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stock-movements"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Delivery Challans",
+      "item": [
+        {
+          "name": "1. List Challans (Filtered by Status & Customer)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/challans?page=1&limit=10&status=CONFIRMED",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "challans"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "status", "value": "CONFIRMED" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "2. Get Challan by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/challans/{{challanId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "challans", "{{challanId}}"]
+            }
+          }
+        },
+        {
+          "name": "3. Create Delivery Challan (Draft or Direct Confirm)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"{{customerId}}\",\n  \"status\": \"DRAFT\",\n  \"notes\": \"Urgent site dispatch via SafeX Logistics.\",\n  \"items\": [\n    {\n      \"productId\": \"{{productId}}\",\n      \"quantity\": 2\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/challans",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "challans"]
+            }
+          }
+        },
+        {
+          "name": "4. Update Draft Challan",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"notes\": \"Updated dispatch instructions: deliver before 4 PM.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/challans/{{challanId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "challans", "{{challanId}}"]
+            }
+          }
+        },
+        {
+          "name": "5. Confirm Challan (Atomic Stock Deduction & OUT Ledger)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/challans/{{challanId}}/confirm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "challans", "{{challanId}}", "confirm"]
+            }
+          }
+        },
+        {
+          "name": "6. Cancel Challan (Atomic Stock Restoration)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/challans/{{challanId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "challans", "{{challanId}}", "cancel"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

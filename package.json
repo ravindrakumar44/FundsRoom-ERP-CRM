@@ -1,0 +1,20 @@
+{
+  "name": "nexora-monorepo",
+  "version": "1.0.0",
+  "description": "NEXORA Mini ERP + CRM Operations Portal",
+  "private": true,
+  "scripts": {
+    "start": "start-all.bat",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "install:all": "npm --prefix backend install && npm --prefix frontend install",
+    "build:backend": "npm --prefix backend run build",
+    "build:frontend": "npm --prefix frontend run build",
+    "seed": "npm --prefix backend run seed",
+    "prisma:generate": "npm --prefix backend run prisma:generate",
+    "prisma:migrate": "npm --prefix backend run prisma:migrate",
+    "neon:deploy": "deploy-neon.bat",
+    "neon:seed": "npm --prefix backend run neon:seed",
+    "neon:verify": "npm --prefix backend run neon:verify"
+  }
+}

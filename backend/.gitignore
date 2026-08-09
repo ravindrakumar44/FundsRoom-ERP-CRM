@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Production Build
+dist/
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+*.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# Database & IDE
+*.sqlite
+.idea/
+.vscode/
