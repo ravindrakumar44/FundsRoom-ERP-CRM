@@ -11,16 +11,20 @@ const startServer = async () => {
     try {
       await prisma.$connect();
       const dbUrl = process.env.DATABASE_URL || '';
-      const urlObj = new URL(dbUrl.replace('postgresql://', 'http://'));
-      const host = urlObj.hostname;
-      const dbName = urlObj.pathname.replace('/', '').split('?')[0];
+      try {
+        const urlObj = new URL(dbUrl.replace('postgresql://', 'http://').replace('postgres://', 'http://'));
+        const host = urlObj.hostname;
+        const dbName = urlObj.pathname.replace('/', '').split('?')[0];
 
-      if (host.includes('neon.tech')) {
-        console.log(`☁️  Connected to NEON CLOUD DATABASE`);
-        console.log(`   Host: ${host}`);
-        console.log(`   Database: ${dbName}`);
-      } else {
-        console.log(`💾 Connected to LOCAL PostgreSQL Database (${host}:${urlObj.port || '5432'}/${dbName})`);
+        if (host.includes('neon.tech')) {
+          console.log(`☁️  Connected to NEON CLOUD DATABASE`);
+          console.log(`   Host: ${host}`);
+          console.log(`   Database: ${dbName}`);
+        } else {
+          console.log(`💾 Connected to PostgreSQL Database (${host}:${urlObj.port || '5432'}/${dbName})`);
+        }
+      } catch {
+        console.log('✅ PostgreSQL database connected.');
       }
       console.log('✅ PostgreSQL database ready & active.');
     } catch (dbError: any) {

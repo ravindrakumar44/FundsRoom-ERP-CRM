@@ -14,9 +14,9 @@ export class CustomerController {
     }
   }
 
-  static async getById(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+  static async getById(req: AuthenticatedRequest<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
     try {
-      const customer = await CustomerService.getById(req.params.id);
+      const customer = await CustomerService.getById(req.params.id as string);
       sendSuccess(res, customer, 'Customer details fetched successfully');
     } catch (error) {
       next(error);
@@ -32,37 +32,37 @@ export class CustomerController {
     }
   }
 
-  static async update(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+  static async update(req: AuthenticatedRequest<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
     try {
-      const customer = await CustomerService.update(req.params.id, req.body);
+      const customer = await CustomerService.update(req.params.id as string, req.body);
       sendSuccess(res, customer, 'Customer updated successfully');
     } catch (error) {
       next(error);
     }
   }
 
-  static async delete(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+  static async delete(req: AuthenticatedRequest<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
     try {
-      const result = await CustomerService.delete(req.params.id);
+      const result = await CustomerService.delete(req.params.id as string);
       sendSuccess(res, result, 'Customer deleted successfully');
     } catch (error) {
       next(error);
     }
   }
 
-  static async getFollowUps(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+  static async getFollowUps(req: AuthenticatedRequest<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
     try {
-      const followUps = await CustomerService.getFollowUps(req.params.id);
+      const followUps = await CustomerService.getFollowUps(req.params.id as string);
       sendSuccess(res, followUps, 'Follow-up logs fetched successfully');
     } catch (error) {
       next(error);
     }
   }
 
-  static async createFollowUp(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+  static async createFollowUp(req: AuthenticatedRequest<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
     try {
       const followUp = await CustomerService.createFollowUp(
-        req.params.id,
+        req.params.id as string,
         req.body,
         req.user!.userId
       );

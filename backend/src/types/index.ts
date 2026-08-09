@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { Query } from 'express-serve-static-core';
 import { Role } from '@prisma/client';
 
 export interface TokenPayload {
@@ -8,8 +9,24 @@ export interface TokenPayload {
   name: string;
 }
 
-export interface AuthenticatedRequest extends Request {
+export type RequestParams = Record<string, string>;
+
+export interface AuthenticatedRequest<
+  P = RequestParams,
+  ResBody = any,
+  ReqBody = any,
+  ReqQuery = Query,
+  Locals extends Record<string, any> = Record<string, any>
+> extends Request<P, ResBody, ReqBody, ReqQuery, Locals> {
   user?: TokenPayload;
+}
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: TokenPayload;
+    }
+  }
 }
 
 export interface PaginationParams {

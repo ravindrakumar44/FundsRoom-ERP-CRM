@@ -23,9 +23,9 @@ export class ProductController {
     }
   }
 
-  static async getById(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+  static async getById(req: AuthenticatedRequest<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
     try {
-      const product = await ProductService.getById(req.params.id);
+      const product = await ProductService.getById(req.params.id as string);
       sendSuccess(res, product, 'Product details fetched successfully');
     } catch (error) {
       next(error);
@@ -41,18 +41,18 @@ export class ProductController {
     }
   }
 
-  static async update(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+  static async update(req: AuthenticatedRequest<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
     try {
-      const product = await ProductService.update(req.params.id, req.body);
+      const product = await ProductService.update(req.params.id as string, req.body);
       sendSuccess(res, product, 'Product updated successfully');
     } catch (error) {
       next(error);
     }
   }
 
-  static async delete(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+  static async delete(req: AuthenticatedRequest<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
     try {
-      const result = await ProductService.delete(req.params.id);
+      const result = await ProductService.delete(req.params.id as string);
       sendSuccess(res, result, 'Product deleted successfully');
     } catch (error) {
       next(error);

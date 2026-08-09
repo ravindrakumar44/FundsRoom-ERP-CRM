@@ -14,9 +14,9 @@ export class ChallanController {
     }
   }
 
-  static async getById(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+  static async getById(req: AuthenticatedRequest<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
     try {
-      const challan = await ChallanService.getById(req.params.id);
+      const challan = await ChallanService.getById(req.params.id as string);
       sendSuccess(res, challan, 'Challan details fetched successfully');
     } catch (error) {
       next(error);
@@ -32,27 +32,27 @@ export class ChallanController {
     }
   }
 
-  static async updateDraft(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+  static async updateDraft(req: AuthenticatedRequest<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
     try {
-      const challan = await ChallanService.updateDraft(req.params.id, req.body);
+      const challan = await ChallanService.updateDraft(req.params.id as string, req.body);
       sendSuccess(res, challan, 'Draft challan updated successfully');
     } catch (error) {
       next(error);
     }
   }
 
-  static async confirm(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+  static async confirm(req: AuthenticatedRequest<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
     try {
-      const challan = await ChallanService.confirm(req.params.id, req.user!.userId);
+      const challan = await ChallanService.confirm(req.params.id as string, req.user!.userId);
       sendSuccess(res, challan, 'Challan confirmed and stock successfully deducted');
     } catch (error) {
       next(error);
     }
   }
 
-  static async cancel(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+  static async cancel(req: AuthenticatedRequest<{ id: string }>, res: Response, next: NextFunction): Promise<void> {
     try {
-      const challan = await ChallanService.cancel(req.params.id, req.user!.userId);
+      const challan = await ChallanService.cancel(req.params.id as string, req.user!.userId);
       sendSuccess(res, challan, 'Challan cancelled successfully');
     } catch (error) {
       next(error);
